@@ -28,7 +28,11 @@ void	decide_roomtype(t_graph *ptr, int room_type)
 
 int	validate_room_name(char **fuck)
 {
-
+	if (fuck[0] == 0 || fuck[1] == 0 || fuck[2] == 0)
+		return (0);
+	if (validate_nbr_ants(fuck[1]) < 0 || validate_nbr_ants(fuck[2] < 0))
+		return (0);
+	return (1);
 }
 
 void	free_fuck(char **fuck)
@@ -38,6 +42,24 @@ void	free_fuck(char **fuck)
 	i = -1;
 	while (fuck[++i])
 		free(fuck[i]);
+}
+
+int	room_name_repeats(t_super *hold, t_graph *ptr)
+{
+	int count;
+	t_graph *checker;
+
+	count = 0;
+	checker = hold->graph;
+	while (checker->next_room != NULL)
+	{
+		if (ft_strcmp(ptr->room_name, checker->room_name) == 0)
+			count++;
+		checker = checker->next_room;
+	}
+	if (count > 0)
+		return (1)
+	return (0);
 }
 
 int	set_roomname(t_graph *ptr, char *line, t_super *hold)
@@ -51,7 +73,8 @@ int	set_roomname(t_graph *ptr, char *line, t_super *hold)
 		flag = INVALID_ROOM;
 	else
 		ptr->room_name = ft_strdup(fuck[0]);
-	// Check for repeats here, ya lazy bum.
+	if (room_name_repeats(hold, ptr) == 1)
+		flag = INVALID_ROOM;
 	free(fuck);
 	free_fuck(fuck);
 	return (flag);
@@ -78,15 +101,18 @@ int	setup_room(t_super *hold, int room_type, char *line)
 		return (LINK);
 	ptr = hold->graph;
 	if (ptr == NULL)
-		init_graph(&ptr, room_type, line, hold);
+		if (init_graph(&ptr, room_type, line, hold) < 0)
+			return (INVALID_ROOM);
 	else
 	{
 		while (ptr->next_room != NULL)
 			ptr = ptr->next_room;
 		ptr2 = ptr->next_room;
-		init_graph(ptr2, room_type, line, hold);
 		ptr->next_room = ptr2;
+		if (init_graph(ptr2, room_type, line, hold) < 0)
+			return (INVALID_ROOM);
 	}
+	return (0);
 }
 
 /*

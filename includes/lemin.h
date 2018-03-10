@@ -21,6 +21,10 @@
 # define INVALID_ORDER -3
 # define INVALID_LINKS -4
 
+/*
+** In your future projects, define 1/0 as "pass" or "fail" so you can have consistent error messages.
+*/
+
 # define START 1
 # define END 2
 # define LINK 3

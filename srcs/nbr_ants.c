@@ -12,10 +12,12 @@
 
 #include "lem-in.h"
 
-static int	validate_nbr_ants(char *line)
+int	validate_nbr_ants(char *line)
 {
 	int nbr_ants;
 
+	if (*line == '\0')
+		return (INVALID_ANT);
 	nbr_ants = 0;
 	if (ft_strlen(line) > 9)
 		return (INVALID_ANT);
