@@ -29,20 +29,6 @@ int		parse_info(t_super *hold)
 	return (0);
 }
 
-void	error_messages(int flag)
-{
-	if (flag == -1)
-		ft_printf("%s%s\n", RED, "Please enter a valid ant number.");
-}
-
-
-void	init_super(t_super **hold)
-{
-	*hold = malloc(sizeof(t_super));
-	(*hold)->group = NULL;
-	(*hold)->graph = NULL;
-}
-
 int main(void)
 {
 	t_super *hold;

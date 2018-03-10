@@ -12,7 +12,7 @@
 
 #include "lem-in.h"
 
-static int	validate_nbr(char *line)
+static int	validate_nbr_ants(char *line)
 {
 	int nbr_ants;
 
@@ -36,7 +36,7 @@ int		nbr_ants(void)
 	int nbr_ants;
 
 	get_next_line(STDIN_FILENO, &line);
-	nbr_ants = validate_nbr(line);
+	nbr_ants = validate_nbr_ants(line);
 	free(line);
 	return (nbr_ants);
 }

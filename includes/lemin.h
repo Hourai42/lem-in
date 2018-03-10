@@ -17,10 +17,9 @@
 # include "ft_printf.h"
 
 # define INVALID_ANT -1
-# define INVALID_ENTRANCE -2
-# define INVALID_EXIT -3
-# define INVALID_ORDER -4
-# define INVALID_LINKS -5
+# define INVALID_ROOM -2
+# define INVALID_ORDER -3
+# define INVALID_LINKS -4
 
 typedef struct s_ant
 {

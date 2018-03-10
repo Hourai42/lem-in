@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_structs.c                                      :+:      :+:    :+:   */
+/*   error_messages.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttran <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/09 19:35:22 by ttran             #+#    #+#             */
-/*   Updated: 2018/03/09 19:35:36 by ttran            ###   ########.fr       */
+/*   Created: 2018/03/09 19:39:07 by ttran             #+#    #+#             */
+/*   Updated: 2018/03/09 19:39:12 by ttran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void	init_super(t_super **hold)
+void	error_messages(int flag)
 {
-	*hold = malloc(sizeof(t_super));
-	(*hold)->group = NULL;
-	(*hold)->graph = NULL;
+	if (flag == -1)
+		ft_printf("%s%s\n", RED, "Please enter a valid ant number.");
 }
