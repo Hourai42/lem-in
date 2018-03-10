@@ -12,8 +12,46 @@
 
 #include "lem-in.h"
 
+int	setup_room(t_super *hold, char *line)
+{
+
+}
+
+/*
+** 1 for start, 2 for end, -1 for invalid.
+*/
+
+int	err_end_start(t_super *hold, char *line)
+{
+	int flag;
+	char end[] = "##end";
+	char start[] = "##start";
+
+	flag = -1;
+	if (ft_strcmp(end, line) == 0)
+	{
+		hold->end++;
+		return (END);
+	}
+	else if (ft_strcmp(start, line) == 0)
+	{
+		hold->start++;
+		return (START);
+	}
+	return (flag);
+}
+
 int	setup_end_start(t_super *hold, char *line)
 {
+	int determine;
+
+	if ((determine = err_end_start(hold, line)) < 0)
+		return (INVALID_ROOM); 
+	get_next_line(STDIN_FILENO, &line);
+	while (line[0] != '\0' && line[0] == '#' && line[1] != '#')
+		get_next_line(STDIN_FILENO, &line);
+	if (line[0] == 'L' || line[0] == '\0' || (line[0] == '#' && line[1] == '#'))
+		return(INVALID_ROOM);
 	
 }
 
@@ -32,6 +70,8 @@ int	validate_room(t_super *hold, char *line)
 		return (setup_end_start(hold, line));
 	else if (line[0] == 'L')
 		return (INVALID_ROOM);
+	else
+		return(setup_room(hold, line));
 }
 
 /*

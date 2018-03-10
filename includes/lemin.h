@@ -21,6 +21,9 @@
 # define INVALID_ORDER -3
 # define INVALID_LINKS -4
 
+# define START 1
+# define END 2
+
 typedef struct s_ant
 {
 	struct t_graph *in_here;
@@ -36,6 +39,8 @@ typedef struct s_graph
 
 /*
 ** Holds the ant array and the graph, including control structures.
+** Hmm, next time, you can simply put line into your super structure
+** so you can free all at once easier. But, oh well.
 */
 
 typedef struct s_super
