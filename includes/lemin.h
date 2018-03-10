@@ -42,6 +42,8 @@ typedef struct s_super
 {
 	t_ant *group;
 	t_graph *graph;
+	int end_counter;
+	int start_counter;
 }			t_super;
 
 #endif

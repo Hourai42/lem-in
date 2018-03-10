@@ -17,4 +17,6 @@ void	init_super(t_super **hold)
 	*hold = malloc(sizeof(t_super));
 	(*hold)->group = NULL;
 	(*hold)->graph = NULL;
+	(*hold)->end_counter = 0;
+	(*hold)->start_counter = 0;
 }

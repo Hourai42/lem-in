@@ -26,6 +26,7 @@ int		parse_info(t_super *hold)
 		return (INVALID_ANT);
 	if ((flag = set_rooms_links(hold)) < 0)
 		return (flag);
+	// Create the ant struct here and put it inside of hold.
 	return (0);
 }
 
