@@ -14,7 +14,7 @@ NAME = lem-in
 SRCS_DIR = ./srcs/
 INCLUDES = ./includes/
 RM = /bin/rm -f
-FILES = 
+FILES = lem-in
 CFILES = $(patsubst %, $(SRCS_DIR)%.c, $(FILES))
 OFILES = $(patsubst %, %.o, $(FILES))
 CFLAGS = -Wall -Wextra -Werror
@@ -27,7 +27,7 @@ LFT_LINK = -L $(LFT) -l ft
 
 #ft_printf
 PRINTF = ./ft_printf/
-PRINT_C = -I $(LFT)$(PRINTF)
+PRINT_INC = -I $(LFT)$(PRINTF)
 
 all: $(LFT_LIB) $(NAME)
 
