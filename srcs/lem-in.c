@@ -42,6 +42,6 @@ int main(void)
 			move_ants(hold);
 	if (flag < 0)
 		error_messages(flag);
-	//free everything in hold and hold itself
+	//free everything in hold and hold itself. Remember to free room_name as well. Always check NULL b4 free!
 	return (0);
 }

@@ -23,6 +23,7 @@
 
 # define START 1
 # define END 2
+# define LINK 3
 
 typedef struct s_ant
 {
@@ -34,6 +35,8 @@ typedef struct s_graph
 {
 	struct s_graph *links;
 	struct s_graph *next_room;
+	bool end;
+	bool start;
 	char *room_name;
 }				t_graph;
 

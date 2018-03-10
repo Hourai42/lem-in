@@ -12,9 +12,81 @@
 
 #include "lem-in.h"
 
-int	setup_room(t_super *hold, char *line)
+void	decide_roomtype(t_graph *ptr, int room_type)
+{
+	ptr->start = 0;
+	ptr->end = 0;
+	if (room_type == START)
+		ptr->start = 1;
+	else if (room_type == END)
+		ptr->end = 1;
+}
+
+/*
+** 1 for successful validation, 0 for failed.
+*/
+
+int	validate_room_name(char **fuck)
 {
 
+}
+
+void	free_fuck(char **fuck)
+{
+	int i;
+
+	i = -1;
+	while (fuck[++i])
+		free(fuck[i]);
+}
+
+int	set_roomname(t_graph *ptr, char *line, t_super *hold)
+{
+	char **fuck;
+	int flag;
+
+	flag = 0;
+	fuck = ft_strsplit(line, ' ');
+	if (validate_room_name(fuck) == 0)
+		flag = INVALID_ROOM;
+	else
+		ptr->room_name = ft_strdup(fuck[0]);
+	// Check for repeats here, ya lazy bum.
+	free(fuck);
+	free_fuck(fuck);
+	return (flag);
+}
+
+int	init_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
+{
+	*ptr = malloc(sizeof(t_graph));
+	if (hold->graph == NULL)
+		hold->graph = *ptr;
+	(*ptr)->links = NULL;
+	(*ptr)->next_room = NULL;
+	(*ptr)->room_name = NULL;
+	decide_roomtype(*ptr, room_type);
+	return (set_roomname(*ptr, line, hold));
+}
+
+int	setup_room(t_super *hold, int room_type, char *line)
+{
+	t_graph *ptr;
+	t_graph *ptr2;
+	
+	if (ft_strchr(line, '-') != NULL)
+		return (LINK);
+	ptr = hold->graph;
+	if (ptr == NULL)
+		init_graph(&ptr, room_type, line, hold);
+	else
+	{
+		while (ptr->next_room != NULL)
+			ptr = ptr->next_room;
+		ptr2 = ptr->next_room;
+		init_graph(ptr2, room_type, line, hold);
+		ptr->next_room = ptr2;
+	}
 }
 
 /*
@@ -50,9 +122,9 @@ int	setup_end_start(t_super *hold, char *line)
 	get_next_line(STDIN_FILENO, &line);
 	while (line[0] != '\0' && line[0] == '#' && line[1] != '#')
 		get_next_line(STDIN_FILENO, &line);
-	if (line[0] == 'L' || line[0] == '\0' || (line[0] == '#' && line[1] == '#'))
+	if (line[0] == 'L' || line[0] == '\0' || (line[0] == '#' && line[1] == '#') || ft_strchr(line, '-') != NULL)
 		return(INVALID_ROOM);
-	
+	return (setup_room(hold, determine, line));
 }
 
 /*
@@ -71,7 +143,7 @@ int	validate_room(t_super *hold, char *line)
 	else if (line[0] == 'L')
 		return (INVALID_ROOM);
 	else
-		return(setup_room(hold, line));
+		return(setup_room(hold, 0, line));
 }
 
 /*
@@ -98,7 +170,7 @@ int	set_room_links(t_super *hold)
 			free(line); 
 			return (INVALID_ROOM);
 		}
-		else if (flag == 1)
+		else if (flag == LINK)
 			break;
 	}
 	if (hold->end != 1 && hold->start != 1)
