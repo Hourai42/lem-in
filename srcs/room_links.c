@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 void	decide_roomtype(t_graph *ptr, int room_type)
 {
@@ -30,7 +30,7 @@ int	validate_room_name(char **fuck)
 {
 	if (fuck[0] == 0 || fuck[1] == 0 || fuck[2] == 0)
 		return (0);
-	if (validate_nbr_ants(fuck[1]) < 0 || validate_nbr_ants(fuck[2] < 0))
+	if (validate_nbr_ants(fuck[1]) < 0 || validate_nbr_ants(fuck[2]) < 0)
 		return (0);
 	return (1);
 }
@@ -44,6 +44,12 @@ void	free_fuck(char **fuck)
 		free(fuck[i]);
 }
 
+/*
+** Due to the way the program is structured , I need to check if it's a single room
+** or not first. If it's a single room, don't bother checking. Otherwise, check until
+** it's NULL, since new rooms aren't connected to the old graph until after it's initialized.
+*/
+
 int	room_name_repeats(t_super *hold, t_graph *ptr)
 {
 	int count;
@@ -51,14 +57,17 @@ int	room_name_repeats(t_super *hold, t_graph *ptr)
 
 	count = 0;
 	checker = hold->graph;
-	while (checker->next_room != NULL)
+	if (checker->next_room != NULL)
 	{
-		if (ft_strcmp(ptr->room_name, checker->room_name) == 0)
-			count++;
-		checker = checker->next_room;
+		while (checker != NULL)
+		{
+			if (ft_strcmp(ptr->room_name, checker->room_name) == 0)
+				count++;
+			checker = checker->next_room;
+		}
 	}
 	if (count > 0)
-		return (1)
+		return (1);
 	return (0);
 }
 
@@ -75,8 +84,8 @@ int	set_roomname(t_graph *ptr, char *line, t_super *hold)
 		ptr->room_name = ft_strdup(fuck[0]);
 	if (room_name_repeats(hold, ptr) == 1)
 		flag = INVALID_ROOM;
-	free(fuck);
 	free_fuck(fuck);
+	free(fuck);
 	return (flag);
 }
 
@@ -92,6 +101,11 @@ int	init_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
 	return (set_roomname(*ptr, line, hold));
 }
 
+/*
+** The reason for ptr->next_room = ptr2 in the case of an error is to prevent mem. leaks.
+** In the case of an error you still want the graph to be connected so you can free it.
+*/
+
 int	setup_room(t_super *hold, int room_type, char *line)
 {
 	t_graph *ptr;
@@ -101,16 +115,21 @@ int	setup_room(t_super *hold, int room_type, char *line)
 		return (LINK);
 	ptr = hold->graph;
 	if (ptr == NULL)
+	{
 		if (init_graph(&ptr, room_type, line, hold) < 0)
 			return (INVALID_ROOM);
+	}
 	else
 	{
 		while (ptr->next_room != NULL)
 			ptr = ptr->next_room;
 		ptr2 = ptr->next_room;
-		ptr->next_room = ptr2;
-		if (init_graph(ptr2, room_type, line, hold) < 0)
+		if (init_graph(&ptr2, room_type, line, hold) < 0)
+		{
+			ptr->next_room = ptr2;
 			return (INVALID_ROOM);
+		}
+		ptr->next_room = ptr2;
 	}
 	return (0);
 }
@@ -128,12 +147,12 @@ int	err_end_start(t_super *hold, char *line)
 	flag = -1;
 	if (ft_strcmp(end, line) == 0)
 	{
-		hold->end++;
+		hold->end_counter++;
 		return (END);
 	}
 	else if (ft_strcmp(start, line) == 0)
 	{
-		hold->start++;
+		hold->start_counter++;
 		return (START);
 	}
 	return (flag);
@@ -160,8 +179,6 @@ int	setup_end_start(t_super *hold, char *line)
 
 int	validate_room(t_super *hold, char *line)
 {
-	char **fuck;
-
 	if (line[0] == '#' && line[1] != '#')
 		return (0);
 	else if (line[0] == '#' && line[1] == '#')
@@ -199,10 +216,12 @@ int	set_room_links(t_super *hold)
 		else if (flag == LINK)
 			break;
 	}
-	if (hold->end != 1 && hold->start != 1)
+	if (hold->end_counter != 1 && hold->start_counter != 1)
 	{
 		free(line);
 		return (INVALID_ROOM);
 	}
-	return(set_links(hold, &line));
+	ft_putstr("WASSUP DAWGGG\n");
+	return (0);
+	//return(set_links(hold, &line));
 }

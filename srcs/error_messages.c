@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 void	error_messages(int flag)
 {
 	if (flag == -1)
-		ft_printf("%s%s\n", RED, "Please enter a valid ant number.");
+		ft_printf("%s%s\n", RED, "ERROR : Please enter a valid ant number.");
+	else if (flag == -2)
+		ft_printf("%s%s\n", RED, "ERROR : Please enter valid rooms.");
 }

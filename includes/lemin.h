@@ -58,5 +58,13 @@ typedef struct s_super
 	int start_counter;
 }			t_super;
 
+int main(void);
+int		nbr_ants(void);
+int	validate_nbr_ants(char *line);
+void	error_messages(int flag);
+void	init_super(t_super **hold);
+int	set_room_links(t_super *hold);
+
+
 #endif
 
