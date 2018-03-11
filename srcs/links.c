@@ -12,6 +12,15 @@
 
 #include "lemin.h"
 
+int	validate_link(t_super *hold, char *line)
+{
+	if (line[0] == '#' && line[1] != '#')
+		return (0);
+	if (line[0] == '#' && line[1] == '#')
+		return (INVALID_LINKS);
+	// Think about how you're going to validate the links.
+}
+
 int	set_links(t_super *hold, **line)
 {
 	while (42)
@@ -21,7 +30,7 @@ int	set_links(t_super *hold, **line)
 		if (validate_link(hold, *line) < 0)
 		{
 			free(*line);
-			return (INVALID_LINK);
+			return (INVALID_LINKS);
 		}
 		get_next_line(STDIN_FILENO, line);
 	}
