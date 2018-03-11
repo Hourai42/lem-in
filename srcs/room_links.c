@@ -163,7 +163,7 @@ int	setup_end_start(t_super *hold, char *line)
 	int determine;
 
 	if ((determine = err_end_start(hold, line)) < 0)
-		return (INVALID_ROOM); 
+		return (0); 
 	get_next_line(STDIN_FILENO, &line);
 	while (line[0] != '\0' && line[0] == '#' && line[1] != '#')
 		get_next_line(STDIN_FILENO, &line);
@@ -221,7 +221,5 @@ int	set_room_links(t_super *hold)
 		free(line);
 		return (INVALID_ROOM);
 	}
-	ft_putstr("WASSUP DAWGGG\n");
-	return (0);
-	//return(set_links(hold, &line));
+	return(set_links(hold, &line));
 }
