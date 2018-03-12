@@ -41,6 +41,8 @@ typedef struct s_graph
 	struct s_graph *next_room;
 	bool end;
 	bool start;
+	int x;
+	int y;
 	char *room_name;
 }				t_graph;
 

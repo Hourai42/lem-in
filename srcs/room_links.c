@@ -26,12 +26,21 @@ void	decide_roomtype(t_graph *ptr, int room_type)
 ** 1 for successful validation, 0 for failed.
 */
 
-int	validate_room_name(char **fuck)
+int	validate_room_specs(char **fuck, t_super *hold, t_graph *ptr)
 {
-	if (fuck[0] == 0 || fuck[1] == 0 || fuck[2] == 0)
+	t_graph *checker;
+
+	checker = hold->graph;
+	if (fuck[0] == 0 || fuck[1] == 0 || fuck[2] == 0 || fuck[3] != 0)
 		return (0);
-	if (validate_nbr_ants(fuck[1]) < 0 || validate_nbr_ants(fuck[2]) < 0)
+	if ((ptr->x = validate_nbr_ants(fuck[1])) < 0 || (ptr->y = validate_nbr_ants(fuck[2])) < 0)
 		return (0);
+	while (checker->next_room != NULL)
+	{
+		if (checker->x == ptr->x && checker->y == ptr->y)
+			return (0);
+		checker = checker->next_room;
+	}
 	return (1);
 }
 
@@ -44,30 +53,17 @@ void	free_fuck(char **fuck)
 		free(fuck[i]);
 }
 
-/*
-** Due to the way the program is structured , I need to check if it's a single room
-** or not first. If it's a single room, don't bother checking. Otherwise, check until
-** it's NULL, since new rooms aren't connected to the old graph until after it's initialized.
-*/
-
 int	room_name_repeats(t_super *hold, t_graph *ptr)
 {
-	int count;
 	t_graph *checker;
 
-	count = 0;
 	checker = hold->graph;
-	if (checker->next_room != NULL)
+	while (checker->next_room != NULL)
 	{
-		while (checker != NULL)
-		{
-			if (ft_strcmp(ptr->room_name, checker->room_name) == 0)
-				count++;
-			checker = checker->next_room;
-		}
+		if (ft_strcmp(ptr->room_name, checker->room_name) == 0)
+			return (1);
+		checker = checker->next_room;
 	}
-	if (count > 0)
-		return (1);
 	return (0);
 }
 
@@ -78,7 +74,7 @@ int	set_roomname(t_graph *ptr, char *line, t_super *hold)
 
 	flag = 0;
 	fuck = ft_strsplit(line, ' ');
-	if (validate_room_name(fuck) == 0)
+	if (validate_room_specs(fuck, hold, ptr) == 0)
 		flag = INVALID_ROOM;
 	else
 		ptr->room_name = ft_strdup(fuck[0]);
@@ -92,24 +88,37 @@ int	set_roomname(t_graph *ptr, char *line, t_super *hold)
 int	init_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
 {
 	*ptr = malloc(sizeof(t_graph));
-	if (hold->graph == NULL)
-		hold->graph = *ptr;
+	hold->graph = *ptr;
 	(*ptr)->links = NULL;
 	(*ptr)->next_room = NULL;
 	(*ptr)->room_name = NULL;
+	(*ptr)->x = -1;
+	(*ptr)->y = -1;
+	decide_roomtype(*ptr, room_type);
+	return (set_roomname(*ptr, line, hold));
+}
+
+int	add_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
+{
+	(*ptr)->next_room = malloc(sizeof(t_graph));
+	*ptr = (*ptr)->next_room;
+	(*ptr)->links = NULL;
+	(*ptr)->next_room = NULL;
+	(*ptr)->room_name = NULL;
+	(*ptr)->x = -1;
+	(*ptr)->y = -1;
 	decide_roomtype(*ptr, room_type);
 	return (set_roomname(*ptr, line, hold));
 }
 
 /*
-** The reason for ptr->next_room = ptr2 in the case of an error is to prevent mem. leaks.
-** In the case of an error you still want the graph to be connected so you can free it.
+** A major change. Push ptr until it's the last room.
+** Create a new function called "add_graph".
 */
 
 int	setup_room(t_super *hold, int room_type, char *line)
 {
 	t_graph *ptr;
-	t_graph *ptr2;
 	
 	if (ft_strchr(line, '-') != NULL)
 		return (LINK);
@@ -123,13 +132,8 @@ int	setup_room(t_super *hold, int room_type, char *line)
 	{
 		while (ptr->next_room != NULL)
 			ptr = ptr->next_room;
-		ptr2 = ptr->next_room;
-		if (init_graph(&ptr2, room_type, line, hold) < 0)
-		{
-			ptr->next_room = ptr2;
+		if (add_graph(&ptr, room_type, line, hold) < 0)
 			return (INVALID_ROOM);
-		}
-		ptr->next_room = ptr2;
 	}
 	return (0);
 }
