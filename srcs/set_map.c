@@ -13,10 +13,12 @@
 #include "lemin.h"
 
 /*
-** What will be done here?
+** Directed vs Undirected graph
+** Steps taken as heuristic, so you don't step backwards
+** End to Beginning to create steps taken!
 */
 
 int	set_map(t_super *hold)
 {
-
+	
 }

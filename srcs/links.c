@@ -48,6 +48,11 @@ void	create_link(t_graph *vertice, t_graph *edge)
 	}
 }
 
+/*
+** Having create_link twice turns it into an undirected graph.
+** It can go both ways!
+*/
+
 int	validate_link_specs(char **fuck, t_super *hold)
 {
 	t_graph *vertice;
@@ -60,6 +65,7 @@ int	validate_link_specs(char **fuck, t_super *hold)
 	ft_strcmp(vertice->room_name, edge->room_name) == 0)
 		return (INVALID_LINKS);
 	create_link(vertice, edge);
+	create_link(edge, vertice);
 	return (1);
 }
 

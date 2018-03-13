@@ -83,6 +83,7 @@ int	set_room_links(t_super *hold);
 int	set_links(t_super *hold, char **line);
 void	free_fuck(char **fuck);
 void	create_antfarm(t_super *hold);
+int	set_map(t_super *hold);
 
 #endif
 
