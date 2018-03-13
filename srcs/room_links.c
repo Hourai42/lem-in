@@ -97,7 +97,6 @@ int	init_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
 		(*ptr)->next_room = malloc(sizeof(t_graph));
 		*ptr = (*ptr)->next_room;
 	}
-	(*ptr)->links = NULL;
 	(*ptr)->next_room = NULL;
 	(*ptr)->room_name = NULL;
 	(*ptr)->link = NULL;

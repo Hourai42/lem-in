@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-t_graph link_name(t_super *hold, char *room_name)
+t_graph *link_name(t_super *hold, char *room_name)
 {
 	t_graph *checker;
 
@@ -57,7 +57,7 @@ int	validate_link_specs(char **fuck, t_super *hold)
 		return (INVALID_LINKS);
 	if ((vertice = link_name(hold, fuck[0])) == NULL ||
 	(edge = link_name(hold, fuck[1])) == NULL ||
-	ft_strcmp(vertice, edge) == 0)
+	ft_strcmp(vertice->room_name, edge->room_name) == 0)
 		return (INVALID_LINKS);
 	create_link(vertice, edge);
 	return (1);
@@ -70,7 +70,7 @@ int	setup_link(t_super *hold, char *line)
 
 	flag = 0;
 	fuck = ft_strsplit(line, '-');
-	if (validate_link_specs(fuck, hold) < 0))
+	if (validate_link_specs(fuck, hold) < 0)
 		flag = INVALID_LINKS;
 	free_fuck(fuck);
 	free(fuck);
@@ -87,11 +87,11 @@ int	validate_link(t_super *hold, char *line)
 
 }
 
-int	set_links(t_super *hold, **line)
+int	set_links(t_super *hold, char **line)
 {
 	while (42)
 	{
-		if (line[0] == '\0')
+		if ((*line)[0] == '\0')
 			break;
 		if (validate_link(hold, *line) < 0)
 		{

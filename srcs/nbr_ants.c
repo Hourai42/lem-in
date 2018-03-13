@@ -12,6 +12,39 @@
 
 #include "lemin.h"
 
+
+t_graph *find_starting(t_super *hold)
+{
+	t_graph *ptr;
+
+	ptr = hold->graph;
+	while (ptr != NULL)
+	{
+		if (ptr->start == 1)
+			return (ptr);
+		ptr = ptr->next_room;
+	}
+	return (NULL);
+}
+
+/*
+** ant_nbr is simply index of farm_index + 1.
+*/
+
+void	create_antfarm(t_super *hold)
+{
+	t_ant *farm;
+	t_graph *starting_room;
+	int i;
+
+	i = -1;
+	starting_room = find_starting(hold);
+	farm = malloc(sizeof(t_ant) * hold->ant_total);
+	while (++i < hold->ant_total)
+		farm[i].in_here = starting_room;
+	hold->farm = farm;
+}
+
 int	validate_nbr_ants(char *line)
 {
 	int nbr_ants;

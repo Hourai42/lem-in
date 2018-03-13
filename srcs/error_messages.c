@@ -14,8 +14,10 @@
 
 void	error_messages(int flag)
 {
-	if (flag == -1)
+	if (flag == INVALID_ANT)
 		ft_printf("%s%s\n", RED, "ERROR : Please enter a valid ant number.");
-	else if (flag == -2)
+	else if (flag == INVALID_ROOM)
 		ft_printf("%s%s\n", RED, "ERROR : Please enter valid rooms.");
+	else if (flag == INVALID_LINKS)
+		ft_printf("%s%s\n", RED, "ERROR : Please enter valid links.");
 }

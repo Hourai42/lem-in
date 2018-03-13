@@ -18,8 +18,7 @@
 
 # define INVALID_ANT -1
 # define INVALID_ROOM -2
-# define INVALID_ORDER -3
-# define INVALID_LINKS -4
+# define INVALID_LINKS -3
 
 /*
 ** In your future projects, define 1/0 as "pass" or "fail" so you can have consistent error messages.
@@ -31,8 +30,7 @@
 
 typedef struct s_ant
 {
-	struct t_graph *in_here;
-	int ant_nbr;
+	struct s_graph *in_here;
 }				t_ant;
 
 /*
@@ -41,7 +39,7 @@ typedef struct s_ant
 
 typedef struct s_link
 {
-	struct t_graph *connected_to;
+	struct s_graph *connected_to;
 	struct s_link *next;
 }				t_link;
 
@@ -52,7 +50,7 @@ typedef struct s_link
 
 typedef struct s_graph
 {
-	struct t_link *link;
+	t_link *link;
 	struct s_graph *next_room;
 	bool end;
 	bool start;
@@ -69,10 +67,11 @@ typedef struct s_graph
 
 typedef struct s_super
 {
-	t_ant *group;
+	t_ant *farm;
 	t_graph *graph;
 	int end_counter;
 	int start_counter;
+	int ant_total;
 }			t_super;
 
 int main(void);
@@ -81,7 +80,9 @@ int	validate_nbr_ants(char *line);
 void	error_messages(int flag);
 void	init_super(t_super **hold);
 int	set_room_links(t_super *hold);
-
+int	set_links(t_super *hold, char **line);
+void	free_fuck(char **fuck);
+void	create_antfarm(t_super *hold);
 
 #endif
 

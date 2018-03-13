@@ -18,15 +18,14 @@
 
 int		parse_info(t_super *hold)
 {
-	int ant_nbr;
 	int flag;
 
 	flag = 0;
-	if ((ant_nbr = nbr_ants()) < 0)
+	if ((hold->ant_total = nbr_ants()) < 0)
 		return (INVALID_ANT);
 	if ((flag = set_room_links(hold)) < 0)
 		return (flag);
-	// Create the ant struct here and put it inside of hold.
+	create_antfarm(hold);
 	return (0);
 }
 
@@ -40,9 +39,10 @@ int main(void)
 	if ((flag = parse_info(hold)) == 0)
 		//if (flag = set_map(hold) == 0)
 		//	move_ants(hold);
-		ft_printf("WASSUP HOMIE\n");
+		ft_printf("%s\n", "FUKKEN SUP");
 	if (flag < 0)
 		error_messages(flag);
 	//free everything in hold and hold itself. Remember to free room_name as well. Always check NULL b4 free!
+	// Eh. You gotta free links now as well.... There's a LOT of shit to free lmao. Links, ants... as well. JEEZ.
 	return (0);
 }
