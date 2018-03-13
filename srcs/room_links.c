@@ -87,24 +87,20 @@ int	set_roomname(t_graph *ptr, char *line, t_super *hold)
 
 int	init_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
 {
-	*ptr = malloc(sizeof(t_graph));
-	hold->graph = *ptr;
+	if (*ptr == NULL)
+	{
+		*ptr = malloc(sizeof(t_graph));
+		hold->graph = *ptr;
+	}
+	else
+	{
+		(*ptr)->next_room = malloc(sizeof(t_graph));
+		*ptr = (*ptr)->next_room;
+	}
 	(*ptr)->links = NULL;
 	(*ptr)->next_room = NULL;
 	(*ptr)->room_name = NULL;
-	(*ptr)->x = -1;
-	(*ptr)->y = -1;
-	decide_roomtype(*ptr, room_type);
-	return (set_roomname(*ptr, line, hold));
-}
-
-int	add_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
-{
-	(*ptr)->next_room = malloc(sizeof(t_graph));
-	*ptr = (*ptr)->next_room;
-	(*ptr)->links = NULL;
-	(*ptr)->next_room = NULL;
-	(*ptr)->room_name = NULL;
+	(*ptr)->link = NULL;
 	(*ptr)->x = -1;
 	(*ptr)->y = -1;
 	decide_roomtype(*ptr, room_type);
@@ -132,7 +128,7 @@ int	setup_room(t_super *hold, int room_type, char *line)
 	{
 		while (ptr->next_room != NULL)
 			ptr = ptr->next_room;
-		if (add_graph(&ptr, room_type, line, hold) < 0)
+		if (init_graph(&ptr, room_type, line, hold) < 0)
 			return (INVALID_ROOM);
 	}
 	return (0);

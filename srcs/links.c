@@ -12,18 +12,69 @@
 
 #include "lemin.h"
 
-/*
-** ft_split by "-" and ensure that index[0] is first name, index[1] is second name, and index[2] is 0.
-** Make sure that both are valid room names.
-** Are repeat links allowed? I guess-- there can be as many links between two rooms as necessary. 
-** Even if pointless... I guess. Unless there's more than one link from start to end, meaning you can put more
-** than one ant in at a time. Which makes sense-- no need to check for link repeats! 
-** Basically not much error checking involved.
-*/
+t_graph link_name(t_super *hold, char *room_name)
+{
+	t_graph *checker;
+
+	checker = hold->graph;
+	while (checker != NULL)
+	{
+		if (ft_strcmp(checker->room_name, room_name) == 0)
+			return(checker);
+		checker = checker->next_room;
+	}
+	return (NULL);
+}
+
+void	create_link(t_graph *vertice, t_graph *edge)
+{
+	t_link *ptr;
+
+	ptr = vertice->link;
+	if (ptr == NULL)
+	{
+		ptr = malloc(sizeof(t_link));
+		ptr->next = NULL;
+		ptr->connected_to = edge;
+	}
+	else
+	{
+		while (ptr->next != NULL)
+			ptr = ptr->next;
+		ptr->next = malloc(sizeof(t_link));
+		ptr = ptr->next;
+		ptr->next = NULL;
+		ptr->connected_to = edge;
+	}
+}
+
+int	validate_link_specs(char **fuck, t_super *hold)
+{
+	t_graph *vertice;
+	t_graph *edge;
+
+	if (fuck[0] == 0 || fuck[1] == 0 || fuck[2] != 0)
+		return (INVALID_LINKS);
+	if ((vertice = link_name(hold, fuck[0])) == NULL ||
+	(edge = link_name(hold, fuck[1])) == NULL ||
+	ft_strcmp(vertice, edge) == 0)
+		return (INVALID_LINKS);
+	create_link(vertice, edge);
+	return (1);
+}
 
 int	setup_link(t_super *hold, char *line)
 {
-	// Kk.
+	char **fuck;
+	int flag;
+
+	flag = 0;
+	fuck = ft_strsplit(line, '-');
+	if (validate_link_specs(fuck, hold) < 0))
+		flag = INVALID_LINKS;
+	free_fuck(fuck);
+	free(fuck);
+	return (flag);
 }
 
 int	validate_link(t_super *hold, char *line)

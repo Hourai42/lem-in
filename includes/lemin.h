@@ -35,9 +35,24 @@ typedef struct s_ant
 	int ant_nbr;
 }				t_ant;
 
+/*
+** Well, a huge memory waste, but simple enough.... A ptr to what it's connected to, then a next.
+*/
+
+typedef struct s_link
+{
+	struct t_graph *connected_to;
+	struct s_link *next;
+}				t_link;
+
+/*
+** Well, putting "links" in your graph is a mistake. At least you know why now...
+** Unless.. a link data structure that holds the graph and a pointer forward lmao.
+*/
+
 typedef struct s_graph
 {
-	struct s_graph *links;
+	struct t_link *link;
 	struct s_graph *next_room;
 	bool end;
 	bool start;
