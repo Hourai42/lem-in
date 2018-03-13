@@ -20,4 +20,6 @@ void	error_messages(int flag)
 		ft_printf("%s%s\n", RED, "ERROR : Please enter valid rooms.");
 	else if (flag == INVALID_LINKS)
 		ft_printf("%s%s\n", RED, "ERROR : Please enter valid links.");
+	else if (flag == INVALID_PATH)
+		ft_printf("%s%s\n", RED, "ERROR : Start isn't linked to end.");
 }

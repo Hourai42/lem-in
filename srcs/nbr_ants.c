@@ -12,7 +12,6 @@
 
 #include "lemin.h"
 
-
 t_graph *find_starting(t_super *hold)
 {
 	t_graph *ptr;

@@ -19,6 +19,7 @@
 # define INVALID_ANT -1
 # define INVALID_ROOM -2
 # define INVALID_LINKS -3
+# define INVALID_PATH -4
 
 /*
 ** In your future projects, define 1/0 as "pass" or "fail" so you can have consistent error messages.
@@ -27,6 +28,7 @@
 # define START 1
 # define END 2
 # define LINK 3
+# define SUCCESS 4
 
 typedef struct s_ant
 {
@@ -46,6 +48,7 @@ typedef struct s_link
 /*
 ** Well, putting "links" in your graph is a mistake. At least you know why now...
 ** Unless.. a link data structure that holds the graph and a pointer forward lmao.
+** Steps, lower is better!
 */
 
 typedef struct s_graph
@@ -57,6 +60,9 @@ typedef struct s_graph
 	int x;
 	int y;
 	char *room_name;
+	int steps;
+	int visited;
+	int successful_path;
 }				t_graph;
 
 /*
