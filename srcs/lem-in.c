@@ -37,7 +37,7 @@ int main(void)
 	flag = 0;
 	init_super(&hold);
 	if ((flag = parse_info(hold)) == 0)
-		//if (flag = set_map(hold) == 0)
+		if (flag = set_map(hold) == 0)
 		//	move_ants(hold);
 		ft_printf("%s\n", "FUKKEN SUP");
 	if (flag < 0)
