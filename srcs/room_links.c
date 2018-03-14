@@ -105,6 +105,7 @@ int	init_graph(t_graph **ptr, int room_type, char *line, t_super *hold)
 	(*ptr)->steps = 999999;
 	(*ptr)->visited = 0;
 	(*ptr)->successful_path = 0;
+	(*ptr)->occupied = 0;
 	decide_roomtype(*ptr, room_type);
 	return (set_roomname(*ptr, line, hold));
 }

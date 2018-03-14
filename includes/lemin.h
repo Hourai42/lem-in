@@ -33,6 +33,7 @@
 typedef struct s_ant
 {
 	struct s_graph *in_here;
+	bool end;
 }				t_ant;
 
 /*
@@ -49,6 +50,7 @@ typedef struct s_link
 ** Well, putting "links" in your graph is a mistake. At least you know why now...
 ** Unless.. a link data structure that holds the graph and a pointer forward lmao.
 ** Steps, lower is better!
+** Have an "occupied" for any room that isn't end.
 */
 
 typedef struct s_graph
@@ -63,6 +65,7 @@ typedef struct s_graph
 	int steps;
 	int visited;
 	int successful_path;
+	int occupied;
 }				t_graph;
 
 /*
@@ -90,6 +93,7 @@ int	set_links(t_super *hold, char **line);
 void	free_fuck(char **fuck);
 void	create_antfarm(t_super *hold);
 int	set_map(t_super *hold);
+void	move_ants(t_super *hold);
 
 #endif
 

@@ -54,16 +54,6 @@ int	leminparty(int *flag, t_graph *traversal, int steps)
 	return (0);
 }
 
-void	check_map(t_graph *end)
-{
-	t_link *ptr;
-
-	ptr = end->link;
-	ft_putstr("Hello\n");
-	ft_printf("end:%d start:%d room name: %s\n", end->end, end->start, end->room_name);
-	ft_printf("end:%d start:%d room name: %s\n", ptr->connected_to->end, ptr->connected_to->start, ptr->connected_to->room_name);
-}
-
 /*
 ** Directed vs Undirected graph
 ** Steps taken as heuristic, so you don't step backwards
@@ -81,7 +71,6 @@ int	set_map(t_super *hold)
 	steps = 0;
 	flag = INVALID_PATH;	
 	end = find_end(hold);
-	//check_map(end);
 	leminparty(&flag, end, steps);
 	return (flag);
 }

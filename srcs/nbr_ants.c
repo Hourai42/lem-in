@@ -40,7 +40,10 @@ void	create_antfarm(t_super *hold)
 	starting_room = find_starting(hold);
 	farm = malloc(sizeof(t_ant) * hold->ant_total);
 	while (++i < hold->ant_total)
+	{
 		farm[i].in_here = starting_room;
+		farm[i].end = 0;
+	}
 	hold->farm = farm;
 }
 

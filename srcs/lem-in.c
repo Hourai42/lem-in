@@ -38,8 +38,7 @@ int main(void)
 	init_super(&hold);
 	if ((flag = parse_info(hold)) == 0)
 		if ((flag = set_map(hold)) == SUCCESS)
-		//	move_ants(hold);
-		ft_printf("%s\n", "FUKKEN SUP");
+			move_ants(hold);
 	if (flag < 0)
 		error_messages(flag);
 	//free everything in hold and hold itself. Remember to free room_name as well. Always check NULL b4 free!

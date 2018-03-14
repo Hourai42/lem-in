@@ -14,7 +14,8 @@ NAME = lem-in
 SRCS_DIR = ./srcs/
 INCLUDES = ./includes/
 RM = /bin/rm -f
-FILES = lem-in nbr_ants lem_structs error_messages room_links links set_map
+FILES = lem-in nbr_ants lem_structs error_messages room_links links set_map \
+			move_ants
 CFILES = $(patsubst %, $(SRCS_DIR)%.c, $(FILES))
 OFILES = $(patsubst %, %.o, $(FILES))
 CFLAGS = -Wall -Wextra -Werror
