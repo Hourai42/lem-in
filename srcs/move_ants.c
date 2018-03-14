@@ -16,11 +16,12 @@ void	end_movement(t_ant ant, t_graph *ptr, int ant_nbr)
 {
 	if (ptr != NULL)
 	{
-		ptr->occupied = 1;
 		ant.in_here = ptr;
 		if (ptr->end == 1)
 			ant.end = 1;
-		printf("L%d-%s ", ant_nbr, ptr->room_name);
+		else
+			ptr->occupied = 1;
+		ft_printf("L%d-%s ", ant_nbr, ptr->room_name);
 	}
 }
 
@@ -39,7 +40,7 @@ int		choose_movement(t_ant ant, int ant_nbr)
 	ptr = NULL;
 	while (mover != NULL)
 	{
-		if (mover->connected_to->steps < steps && 
+		if (mover->connected_to->steps <= steps && 
 		mover->connected_to->occupied == 0 && 
 		mover->connected_to->successful_path == 1)
 		{
@@ -70,8 +71,8 @@ void	one_turn(t_super *hold)
 	i = -1;
 	while (++i < hold->ant_total)
 	{
-		if (hold->farm[1].end != 1)
-			move(hold->farm[1], i + 1);
+		if (hold->farm[i].end != 1)
+			move(hold->farm[i], i + 1);
 	}
 }
 
@@ -103,6 +104,6 @@ void	move_ants(t_super *hold)
 		one_turn(hold);
 		if (ants_in_end(hold) == hold->ant_total)
 			break;
-		ft_printf("\n");
+		//ft_printf("\n");
 	}
 }
