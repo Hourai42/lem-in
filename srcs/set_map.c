@@ -30,22 +30,24 @@ int	leminparty(int *flag, t_graph *traversal, int steps)
 {
 	t_link *ptr;
 
-	if (travseral == NULL || (traversal->visited == 1 && graph->steps <= steps))
+	if (traversal == NULL || (traversal->visited == 1 && traversal->steps <= steps))
 		return (0);
 	if (traversal->start == 1)
 	{
 		*flag = SUCCESS;
-		return (0);
+		return (1);
 	}
-	end->visited = 1;
-	if (graph->steps > steps)
-		graph->steps = steps;
+	traversal->visited = 1;
+	if (traversal->steps > steps)
+		traversal->steps = steps;
 	ptr = traversal->link;
 	while (ptr != NULL)
 	{
-		leminparty(flag, ptr->connected_to, steps + 1);
+		if (leminparty(flag, ptr->connected_to, steps + 1) == 1)
+			traversal->successful_path = 1;
 		ptr = ptr->next;
 	}
+	return (0);
 }
 
 /*
