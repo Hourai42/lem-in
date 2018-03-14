@@ -14,19 +14,17 @@
 
 void	end_movement(t_ant ant, t_graph *ptr, int ant_nbr)
 {
-	if (ptr != NULL)
-	{
-		ant.in_here = ptr;
-		if (ptr->end == 1)
-			ant.end = 1;
-		else
-			ptr->occupied = 1;
-		ft_printf("L%d-%s ", ant_nbr, ptr->room_name);
-	}
+	ant.in_here = ptr;
+	if (ptr->end == 1)			
+		ant.end = 1;
+	else
+		ptr->occupied = 1;
+	ft_printf("L%d-%s ", ant_nbr, ptr->room_name);
 }
 
 /*
 ** Steps is the only changing criteria.
+** I think it's because I'm sending a struct instead of a pointer to struct.
 */
 
 int		choose_movement(t_ant ant, int ant_nbr)
@@ -40,7 +38,7 @@ int		choose_movement(t_ant ant, int ant_nbr)
 	ptr = NULL;
 	while (mover != NULL)
 	{
-		if (mover->connected_to->steps <= steps && 
+		if (mover->connected_to->steps < steps && 
 		mover->connected_to->occupied == 0 && 
 		mover->connected_to->successful_path == 1)
 		{
@@ -51,7 +49,9 @@ int		choose_movement(t_ant ant, int ant_nbr)
 	}	
 	if (ptr == NULL)
 		return (0);
+	ft_printf("%s\n", ant.in_here->room_name);
 	end_movement(ant, ptr, ant_nbr);
+	ft_printf("%s\n", ant.in_here->room_name);
 	return (1);
 }
 
