@@ -26,6 +26,11 @@ t_graph *link_name(t_super *hold, char *room_name)
 	return (NULL);
 }
 
+/*
+** You made a mistake here where you forgot to connect vertice->link to anything.
+** When it started with NULL, at least.
+*/
+
 void	create_link(t_graph *vertice, t_graph *edge)
 {
 	t_link *ptr;
@@ -36,6 +41,7 @@ void	create_link(t_graph *vertice, t_graph *edge)
 		ptr = malloc(sizeof(t_link));
 		ptr->next = NULL;
 		ptr->connected_to = edge;
+		vertice->link = ptr;
 	}
 	else
 	{
