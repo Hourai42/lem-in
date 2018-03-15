@@ -28,6 +28,8 @@ t_graph *find_end(t_super *hold)
 
 /*
 ** The "start" node steps is always 999999, never changed.
+** Thank god for that flash of insight and realization.
+** As long as a single "link" leads to the end, the node is valid.
 */
 
 int	leminparty(int *flag, t_graph *traversal, int steps, int win)
@@ -47,7 +49,7 @@ int	leminparty(int *flag, t_graph *traversal, int steps, int win)
 	ptr = traversal->link;
 	while (ptr != NULL)
 	{
-		if (leminparty(flag, ptr->connected_to, steps + 1, win) == 1)
+		if (leminparty(flag, ptr->connected_to, steps + 1, 0) == 1)
 			win = 1;
 		ptr = ptr->next;
 	}
@@ -81,14 +83,10 @@ int	set_map(t_super *hold)
 {
 	t_graph *end;
 	int flag;
-	int steps;
-	int win;
-
-	win = 0;
-	steps = 0;
+	
 	flag = INVALID_PATH;	
 	end = find_end(hold);
-	leminparty(&flag, end, steps, win);
+	leminparty(&flag, end, 0, 0);
 	go_thru_map(hold);
 	return (flag);
 }
