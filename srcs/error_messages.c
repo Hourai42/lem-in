@@ -15,11 +15,11 @@
 void	error_messages(int flag)
 {
 	if (flag == INVALID_ANT)
-		ft_printf("%s%s\n", RED, "ERROR : Please enter a valid ant number.");
+		ft_printf("%s%s", RED, "ERROR : Please enter a valid ant number.");
 	else if (flag == INVALID_ROOM)
-		ft_printf("%s%s\n", RED, "ERROR : Please enter valid rooms.");
+		ft_printf("%s%s", RED, "ERROR : Please enter valid rooms.");
 	else if (flag == INVALID_LINKS)
-		ft_printf("%s%s\n", RED, "ERROR : Please enter valid links.");
+		ft_printf("%s%s", RED, "ERROR : Please enter valid links.");
 	else if (flag == INVALID_PATH)
-		ft_printf("%s%s\n", RED, "ERROR : Start isn't linked to end.");
+		ft_printf("%s%s", RED, "ERROR : Start isn't linked to end.");
 }

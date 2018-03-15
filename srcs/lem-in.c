@@ -41,6 +41,7 @@ int main(void)
 			move_ants(hold);
 	if (flag < 0)
 		error_messages(flag);
+	ft_printf("\n");
 	//free everything in hold and hold itself. Remember to free room_name as well. Always check NULL b4 free!
 	// Eh. You gotta free links now as well.... There's a LOT of shit to free lmao. Links, ants... as well. JEEZ.
 	return (0);

@@ -28,21 +28,25 @@ t_graph *find_starting(t_super *hold)
 
 /*
 ** ant_nbr is simply index of farm_index + 1.
+** Of course! Think about it in terms of 2d array.
+** You malloc'd the big one, but not the small ones it consists of?
+** Farm has enough memory to hold everything, but it doesn't hold it all yet?
 */
 
 void	create_antfarm(t_super *hold)
 {
-	t_ant *farm;
+	t_ant **farm;
 	t_graph *starting_room;
 	int i;
 
 	i = -1;
 	starting_room = find_starting(hold);
-	farm = malloc(sizeof(t_ant) * hold->ant_total);
+	farm = (t_ant **)malloc(sizeof(t_ant *) * hold->ant_total);
 	while (++i < hold->ant_total)
 	{
-		farm[i].in_here = starting_room;
-		farm[i].end = 0;
+		farm[i] = malloc(sizeof(t_ant));
+		farm[i]->in_here = starting_room;
+		farm[i]->end = 0;
 	}
 	hold->farm = farm;
 }

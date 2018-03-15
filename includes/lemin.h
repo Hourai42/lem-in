@@ -76,7 +76,7 @@ typedef struct s_graph
 
 typedef struct s_super
 {
-	t_ant *farm;
+	t_ant **farm;
 	t_graph *graph;
 	int end_counter;
 	int start_counter;

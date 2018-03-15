@@ -30,7 +30,7 @@ t_graph *find_end(t_super *hold)
 ** The "start" node steps is always 999999, never changed.
 */
 
-int	leminparty(int *flag, t_graph *traversal, int steps)
+int	leminparty(int *flag, t_graph *traversal, int steps, int win)
 {
 	t_link *ptr;
 
@@ -47,11 +47,26 @@ int	leminparty(int *flag, t_graph *traversal, int steps)
 	ptr = traversal->link;
 	while (ptr != NULL)
 	{
-		if (leminparty(flag, ptr->connected_to, steps + 1) == 1)
-			traversal->successful_path = 1;
+		if (leminparty(flag, ptr->connected_to, steps + 1, win) == 1)
+			win = 1;
 		ptr = ptr->next;
 	}
-	return (0);
+	if (win == 1)
+		traversal->successful_path = 1;
+	return (win);
+}
+
+void	go_thru_map(t_super *hold)
+{
+	t_graph *ptr;
+
+	ptr = hold->graph;
+	while (ptr != NULL)
+	{
+		ft_printf("end:%d start:%d room name:%s steps:%d successful_path:%d\n",
+		ptr->end, ptr->start, ptr->room_name, ptr->steps, ptr->successful_path);
+		ptr = ptr->next_room;
+	}
 }
 
 /*
@@ -67,10 +82,13 @@ int	set_map(t_super *hold)
 	t_graph *end;
 	int flag;
 	int steps;
+	int win;
 
+	win = 0;
 	steps = 0;
 	flag = INVALID_PATH;	
 	end = find_end(hold);
-	leminparty(&flag, end, steps);
+	leminparty(&flag, end, steps, win);
+	go_thru_map(hold);
 	return (flag);
 }
