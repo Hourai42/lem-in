@@ -12,9 +12,9 @@
 
 #include "lemin.h"
 
-t_graph *find_end(t_super *hold)
+static t_graph	*find_end(t_super *hold)
 {
-	t_graph *ptr;
+	t_graph		*ptr;
 
 	ptr = hold->graph;
 	while (ptr != NULL)
@@ -29,14 +29,16 @@ t_graph *find_end(t_super *hold)
 /*
 ** The "start" node steps is always 999999, never changed.
 ** Thank god for that flash of insight and realization.
-** As long as a single "link" leads to the end, the node is valid and it's a successful path.
+** As long as a single "link" leads to the end, the node is
+** valid and it's a successful path.
 */
 
-int	leminparty(int *flag, t_graph *traversal, int steps, int win)
+static int		leminparty(int *flag, t_graph *traversal, int steps, int win)
 {
-	t_link *ptr;
+	t_link		*ptr;
 
-	if (traversal == NULL || (traversal->visited == 1 && traversal->steps <= steps))
+	if (traversal == NULL || (traversal->visited == 1
+	&& traversal->steps <= steps))
 		return (0);
 	if (traversal->start == 1)
 	{
@@ -58,19 +60,6 @@ int	leminparty(int *flag, t_graph *traversal, int steps, int win)
 	return (win);
 }
 
-void	go_thru_map(t_super *hold)
-{
-	t_graph *ptr;
-
-	ptr = hold->graph;
-	while (ptr != NULL)
-	{
-		ft_printf("end:%d start:%d room name:%s steps:%d successful_path:%d\n",
-		ptr->end, ptr->start, ptr->room_name, ptr->steps, ptr->successful_path);
-		ptr = ptr->next_room;
-	}
-}
-
 /*
 ** Directed vs Undirected graph
 ** Steps taken as heuristic, so you don't step backwards
@@ -79,14 +68,13 @@ void	go_thru_map(t_super *hold)
 ** Start high, only replace step number if it's lower in case of double pathing.
 */
 
-int	set_map(t_super *hold)
+int				set_map(t_super *hold)
 {
-	t_graph *end;
-	int flag;
+	t_graph		*end;
+	int			flag;
 
-	flag = INVALID_PATH;	
+	flag = INVALID_PATH;
 	end = find_end(hold);
 	leminparty(&flag, end, 0, 0);
-	go_thru_map(hold);
 	return (flag);
 }

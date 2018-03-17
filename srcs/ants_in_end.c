@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   links.c                                            :+:      :+:    :+:   */
+/*   ants_in_end.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttran <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/10 20:13:31 by ttran             #+#    #+#             */
-/*   Updated: 2018/03/10 20:13:38 by ttran            ###   ########.fr       */
+/*   Created: 2018/03/17 01:06:41 by ttran             #+#    #+#             */
+/*   Updated: 2018/03/17 01:06:48 by ttran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int	set_links(t_super *hold, char **line)
+int	ants_in_end(t_super *hold)
 {
-	while (42)
+	int i;
+	int ants_end;
+
+	ants_end = 0;
+	i = -1;
+	while (++i < hold->ant_total)
 	{
-		if ((*line)[0] == '\0')
-			break ;
-		if (validate_link(hold, *line) < 0)
-		{
-			free(*line);
-			return (INVALID_LINKS);
-		}
-		get_next_line(STDIN_FILENO, line);
+		if (hold->farm[i]->end == 1)
+			ants_end++;
 	}
-	free(*line);
-	return (0);
+	return (ants_end);
 }

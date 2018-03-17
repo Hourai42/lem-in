@@ -12,9 +12,9 @@
 
 #include "lemin.h"
 
-t_graph *find_starting(t_super *hold)
+static t_graph	*find_starting(t_super *hold)
 {
-	t_graph *ptr;
+	t_graph		*ptr;
 
 	ptr = hold->graph;
 	while (ptr != NULL)
@@ -33,11 +33,11 @@ t_graph *find_starting(t_super *hold)
 ** Farm has enough memory to hold everything, but it doesn't hold it all yet?
 */
 
-void	create_antfarm(t_super *hold)
+void			create_antfarm(t_super *hold)
 {
-	t_ant **farm;
-	t_graph *starting_room;
-	int i;
+	t_ant		**farm;
+	t_graph		*starting_room;
+	int			i;
 
 	i = -1;
 	starting_room = find_starting(hold);
@@ -51,9 +51,9 @@ void	create_antfarm(t_super *hold)
 	hold->farm = farm;
 }
 
-int	validate_nbr_ants(char *line)
+int				validate_nbr_ants(char *line)
 {
-	int nbr_ants;
+	int			nbr_ants;
 
 	if (*line == '\0')
 		return (INVALID_ANT);
@@ -71,10 +71,10 @@ int	validate_nbr_ants(char *line)
 	return (nbr_ants);
 }
 
-int		nbr_ants(void)
+int				nbr_ants(void)
 {
-	char *line;
-	int nbr_ants;
+	char		*line;
+	int			nbr_ants;
 
 	get_next_line(STDIN_FILENO, &line);
 	nbr_ants = validate_nbr_ants(line);

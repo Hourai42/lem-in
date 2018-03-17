@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.c                                           :+:      :+:    :+:   */
+/*   lemin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttran <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/07 12:04:45 by ttran             #+#    #+#             */
-/*   Updated: 2018/03/07 12:04:46 by ttran            ###   ########.fr       */
+/*   Created: 2018/03/17 01:42:55 by ttran             #+#    #+#             */
+/*   Updated: 2018/03/17 01:42:59 by ttran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Parse_info will hold ant_nbr until the entry room is decided.
 */
 
-int		parse_info(t_super *hold)
+int	parse_info(t_super *hold)
 {
 	int flag;
 
@@ -29,10 +29,10 @@ int		parse_info(t_super *hold)
 	return (0);
 }
 
-int main(void)
+int	main(void)
 {
-	t_super *hold;
-	int flag;
+	t_super	*hold;
+	int		flag;
 
 	flag = 0;
 	init_super(&hold);
@@ -42,7 +42,6 @@ int main(void)
 	if (flag < 0)
 		error_messages(flag);
 	ft_printf("\n");
-	//free everything in hold and hold itself. Remember to free room_name as well. Always check NULL b4 free!
-	// Eh. You gotta free links now as well.... There's a LOT of shit to free lmao. Links, ants... as well. JEEZ.
+	superfree(&hold);
 	return (0);
 }
