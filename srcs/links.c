@@ -20,7 +20,7 @@ int	set_links(t_super *hold, char **line)
 			break ;
 		if (validate_link(hold, *line) < 0)
 		{
-			free(*line);
+			free_gnl(line);
 			return (INVALID_LINKS);
 		}
 		free_gnl(line);

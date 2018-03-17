@@ -19,7 +19,7 @@ void	free_gnl(char **line)
 		if (*line != NULL)
 		{
 			free(*line);
-			line = NULL;
+			*line = NULL;
 		}
 	}
 }

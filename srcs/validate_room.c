@@ -61,23 +61,23 @@ static int	err_end_start(t_super *hold, char *line)
 	return (flag);
 }
 
-static int	setup_end_start(t_super *hold, char *line)
+static int	setup_end_start(t_super *hold, char **line)
 {
 	int		determine;
 
-	if ((determine = err_end_start(hold, line)) < 0)
+	if ((determine = err_end_start(hold, *line)) < 0)
 		return (0);
-	free_gnl(&line);
-	get_next_line(STDIN_FILENO, &line);
-	while (line[0] != '\0' && line[0] == '#' && line[1] != '#')
+	free_gnl(line);
+	get_next_line(STDIN_FILENO, line);
+	while ((*line)[0] != '\0' && (*line)[0] == '#' && (*line)[1] != '#')
 	{
-		free_gnl(&line);
-		get_next_line(STDIN_FILENO, &line);
+		free_gnl(line);
+		get_next_line(STDIN_FILENO, line);
 	}
-	if (line[0] == 'L' || line[0] == '\0' || (line[0] == '#' &&
-	line[1] == '#') || ft_strchr(line, '-') != NULL)
+	if ((*line)[0] == 'L' || (*line)[0] == '\0' || ((*line)[0] == '#' &&
+	(*line)[1] == '#') || ft_strchr(*line, '-') != NULL)
 		return (INVALID_ROOM);
-	return (setup_room(hold, determine, line));
+	return (setup_room(hold, determine, *line));
 }
 
 /*
@@ -85,16 +85,16 @@ static int	setup_end_start(t_super *hold, char *line)
 ** Start/End cannot be same room!
 */
 
-static int	validate_room(t_super *hold, char *line)
+static int	validate_room(t_super *hold, char **line)
 {
-	if (line[0] == '#' && line[1] != '#')
+	if ((*line)[0] == '#' && (*line)[1] != '#')
 		return (0);
-	else if (line[0] == '#' && line[1] == '#')
+	else if ((*line)[0] == '#' && (*line)[1] == '#')
 		return (setup_end_start(hold, line));
-	else if (line[0] == 'L')
+	else if ((*line)[0] == 'L')
 		return (INVALID_ROOM);
 	else
-		return (setup_room(hold, 0, line));
+		return (setup_room(hold, 0, *line));
 }
 
 /*
@@ -119,9 +119,9 @@ int			set_room_links(t_super *hold)
 	{
 		free_gnl(&line);
 		get_next_line(STDIN_FILENO, &line);
-		if (line[0] == '\0' || (flag = validate_room(hold, line)) < 0)
+		if (line[0] == '\0' || (flag = validate_room(hold, &line)) < 0)
 		{
-			free(line);
+			free_gnl(&line);
 			return (INVALID_ROOM);
 		}
 		else if (flag == LINK)
@@ -129,7 +129,7 @@ int			set_room_links(t_super *hold)
 	}
 	if (hold->end_counter != 1 && hold->start_counter != 1)
 	{
-		free(line);
+		free_gnl(&line);
 		return (INVALID_ROOM);
 	}
 	return (set_links(hold, &line));
