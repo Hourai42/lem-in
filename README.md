@@ -11,6 +11,7 @@ A few lessons learned in this project.
 2. Don't take shortcuts-- understand why something is happening. This is why you had so many errors when setting an array of struct pointers.
 3. Have defined error messages-- don't just randomly use 1 and 0 as you wish. DEFINE abstractions.
 4. Think about time/space complexity from now on. You used a linked list because the input is dynamic-- but an array of structs would have allowed you to access the graph far quicker. In O(1) time.
+5. GNL doesn't free itself. Freeing the line you send in is still your responsibility-- GNL only handles the static buffer.
 
 Problem Approach
 ----------------
