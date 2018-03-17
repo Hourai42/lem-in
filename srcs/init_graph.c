@@ -70,7 +70,7 @@ static int	set_roomname(t_graph *ptr, char *line, t_super *hold)
 		flag = INVALID_ROOM;
 	else
 		ptr->room_name = ft_strdup(fuck[0]);
-	if (room_name_repeats(hold, ptr) == 1)
+	if (flag == 0 && room_name_repeats(hold, ptr) == 1)
 		flag = INVALID_ROOM;
 	free_fuck(fuck);
 	free(fuck);

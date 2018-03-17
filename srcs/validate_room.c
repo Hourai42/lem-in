@@ -67,9 +67,13 @@ static int	setup_end_start(t_super *hold, char *line)
 
 	if ((determine = err_end_start(hold, line)) < 0)
 		return (0);
+	free_gnl(&line);
 	get_next_line(STDIN_FILENO, &line);
 	while (line[0] != '\0' && line[0] == '#' && line[1] != '#')
+	{
+		free_gnl(&line);
 		get_next_line(STDIN_FILENO, &line);
+	}
 	if (line[0] == 'L' || line[0] == '\0' || (line[0] == '#' &&
 	line[1] == '#') || ft_strchr(line, '-') != NULL)
 		return (INVALID_ROOM);
@@ -110,8 +114,10 @@ int			set_room_links(t_super *hold)
 	int		flag;
 
 	flag = 0;
+	line = NULL;
 	while (42)
 	{
+		free_gnl(&line);
 		get_next_line(STDIN_FILENO, &line);
 		if (line[0] == '\0' || (flag = validate_room(hold, line)) < 0)
 		{

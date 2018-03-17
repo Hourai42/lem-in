@@ -15,7 +15,7 @@ SRCS_DIR = ./srcs/
 INCLUDES = ./includes/
 RM = /bin/rm -f
 FILES = ants_in_end error_messages free init_graph lemin lem_structs links \
-			move_ants nbr_ants set_map validate_link validate_room
+			move_ants nbr_ants set_map validate_link validate_room free_gnl
 CFILES = $(patsubst %, $(SRCS_DIR)%.c, $(FILES))
 OFILES = $(patsubst %, %.o, $(FILES))
 CFLAGS = -Wall -Wextra -Werror

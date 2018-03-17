@@ -141,6 +141,7 @@ void				error_messages(int flag);
 
 void				superfree(t_super **hold);
 void				free_fuck(char **fuck);
+void				free_gnl(char **line);
 void				init_super(t_super **hold);
 
 #endif
